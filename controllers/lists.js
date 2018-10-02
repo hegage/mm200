@@ -4,7 +4,7 @@ var db = require('../models/dbconnection');
 var apiCallback = require('../models/apicallback')
 
 //create class
-var Items = {
+var Lists = {
     //function to query all items
     getAll: (req, res) => {
         let pathname = req._parsedUrl.pathname.split('/');
@@ -13,7 +13,6 @@ var Items = {
         db.query('SELECT * from ??', [section], 
         (err, result) => apiCallback(err, result, section, req, res));
     },
-
     /**
      * Get single list
      */
@@ -22,9 +21,16 @@ var Items = {
         let section = pathname[1];
 
         db.query('SELECT * from ?? WHERE id = ?', [section, req.params.id],
-        (err, result) => apiCallback(err, result, section, req, res));
-    },
+        (err, result) =>  {
+            if(err) { return res.json(JSON.stringify(err)); }
+            var resultat = result;
+            db.query('SELECT * FROM items WHERE list_id = ?', [req.params.id], (err, result) => {
+                let extras = result;                
+                apiCallback(err, resultat, section, req, res, extras);
+            });
 
+        })
+    },
     /**
      * Create new list.
      */
@@ -78,4 +84,4 @@ var Items = {
         db.query('DELETE FROM ?? WHERE id = ?', [section, req.params.id], this.apiCallback);
     },
 };
-module.exports = Items;
+module.exports = Lists;
