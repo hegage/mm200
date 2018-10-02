@@ -6,6 +6,7 @@ module.exports = function (app) {
     app.route('/items/:id').get(items.get);
     app.route('/items').post(items.create);
     app.route('/items/:id').delete(items.delete);
+    app.route('/items/:id').put(items.put);
 
 
     // LISTS

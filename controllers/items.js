@@ -8,7 +8,7 @@ var Items = {
         let pathname = req._parsedUrl.pathname.split('/');
         let section = pathname[1];
         db.query('SELECT * FROM items WHERE id = ?', [req.params.id], 
-        (err, result => apiCallback(err, result, section, req, res))); 
+        (err, result) => apiCallback(err, result, section, req, res)); 
     },
     create: (req, res) => {
         let pathname = req._parsedUrl.pathname.split('/');
@@ -36,8 +36,6 @@ var Items = {
                     if (err) throw err;
                     let resultJson = JSON.stringify(results);
                     resultJson = JSON.parse(resultJson);
-                    console.log(resultJson);
-                    //add our JSON results to the data table
                     apiResult.data = resultJson;
 
                     //send JSON to Express
@@ -50,7 +48,11 @@ var Items = {
         throw new Error('Not yet implemented');
     },
     delete: (req, res) => {
-        throw new Error('Not yet implemented');
+        let pathname = req._parsedUrl.pathname.split('/');
+        let section = pathname[1];
+
+        db.query('DELETE FROM items WHERE id = ?', [req.params.id],
+        (err, result) => apiCallback(err, result, section, req, res));
     },
 };
 module.exports = Items;
