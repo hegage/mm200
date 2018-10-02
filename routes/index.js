@@ -3,9 +3,9 @@ module.exports = function (app) {
     var items = require('../controllers/items');
     var lists = require('../controllers/lists');
 
-    app.route('/items').get(items.getAll);
-    app.route('/items').post(items.create)
-
+    app.route('/items/:id').get(items.get);
+    app.route('/items').post(items.create);
+    app.route('/items/:id').delete(items.delete);
 
 
     // LISTS
