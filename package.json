@@ -4,6 +4,7 @@
   "description": "API for todo application",
   "main": "index.js",
   "scripts": {
+    "start" : "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Hege Aanjesen",
@@ -14,6 +15,7 @@
     "pg-promise": "^8.4.6"
   },
   "devDependencies": {
-    "mysql": "^2.16.0"
+    "mysql": "^2.16.0",
+    "nodemon": "^1.18.4"
   }
 }
