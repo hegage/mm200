@@ -45,7 +45,12 @@ var Items = {
             });
     },
     put: (req, res) => {
-        throw new Error('Not yet implemented');
+        let pathname = req._parsedUrl.pathname.split('/');
+        let section = pathname[1]; 
+        
+        db.query('UPDATE items SET `title` = ? WHERE id = ?', [req.body.title, req.params.id],
+        (err, result) => apiCallback(err, result, section, req, res));
+
     },
     delete: (req, res) => {
         let pathname = req._parsedUrl.pathname.split('/');
