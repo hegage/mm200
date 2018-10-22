@@ -1,18 +1,32 @@
 'use strict';
 module.exports = function (app) {
+    var users = require('../controllers/users');
     var items = require('../controllers/items');
     var lists = require('../controllers/lists');
 
-    app.route('/items/:id').get(items.get);
+    app.route('/users/:id')
+        .get(users.get)
+        .put(users.put)
+        .delete(users.delete);
+
+    app.route('/users').post(users.create);
+
+
+    app.route('/items/:id')
+        .get(items.get)
+        .put(items.put)
+        .delete(items.delete);
+
     app.route('/items').post(items.create);
-    app.route('/items/:id').delete(items.delete);
-    app.route('/items/:id').put(items.put);
 
 
     // LISTS
-    app.route('/lists').get(lists.getAll);
-    app.route('/lists/:id').get(lists.get);
-    app.route('/lists').post(lists.create);
-    app.route('/lists/:id').put(lists.put);
-    app.route('/lists/:id').delete(lists.delete);
+    app.route('/lists')
+        .get(lists.getAll)
+        .post(lists.create);
+
+    app.route('/lists/:id')
+        .get(lists.get)
+        .put(lists.put)
+        .delete(lists.delete);
 }
