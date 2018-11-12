@@ -3,6 +3,9 @@ module.exports = function (app) {
     var users = require('../controllers/users');
     var items = require('../controllers/items');
     var lists = require('../controllers/lists');
+    var auth = require('../controllers/auth');
+
+    app.route('/login').post(auth.login);
 
     app.route('/users/:id')
         .get(users.get)
