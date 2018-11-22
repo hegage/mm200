@@ -1,15 +1,13 @@
 
 //include the model (aka DB connection)
 var db = require('../models/dbconnection');
-var apiCallback = require('../models/apicallback')
 var bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 
-var Items = {
+var Auth = {
     login: (req, res) => {
-        let pathname = req._parsedUrl.pathname.split('/');
         db.query('SELECT * FROM users WHERE email = ?', [req.body.email], (err, result) => {
-            if(err){ throw err; }
+            if(err){ throw Error(err); }
             
             var foundUser = result[0];
 
@@ -29,7 +27,6 @@ var Items = {
                          expiresIn: '2h'
                        });
                        return res.status(200).json({
-                         success: 'Welcome to the JWT Auth',
                          token: JWTToken
                        });
                 }
@@ -40,5 +37,17 @@ var Items = {
             
         })
     },
+    validate: (req, res) => {
+        if (req.headers.authorization.replace('Bearer ', '') === 'undefined' || req.headers.authorization === 'Bearer null') {
+            return res.status(400).json({"message": "JWT malformed"})
+        }
+        
+        jwt.verify(req.headers.authorization.replace('Bearer ', ''), 'UniCornsCannaeFly1337', (err, decoded) => {
+            if (err) { return res.status(401).json({"valid": false}) }
+
+            return res.status(200).json({"valid": true});
+        });
+        
+    }
 };
-module.exports = Items;
+module.exports = Auth;

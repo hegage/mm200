@@ -6,6 +6,7 @@ module.exports = function (app) {
     var auth = require('../controllers/auth');
 
     app.route('/login').post(auth.login);
+    app.route('/validate').post(auth.validate);
 
     app.route('/users/:id')
         .get(users.get)
@@ -14,13 +15,13 @@ module.exports = function (app) {
 
     app.route('/users').post(users.create);
 
-
     app.route('/items/:id')
         .get(items.get)
         .put(items.put)
         .delete(items.delete);
 
     app.route('/items').post(items.create);
+    app.route('/items/:id/setstatus').put(items.setCompleted)
 
 
     // LISTS
@@ -32,4 +33,5 @@ module.exports = function (app) {
         .get(lists.get)
         .put(lists.put)
         .delete(lists.delete);
+
 }
