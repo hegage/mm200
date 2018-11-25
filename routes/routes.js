@@ -20,7 +20,7 @@ module.exports = function (app) {
         .put(items.put)
         .delete(items.delete);
 
-    app.route('/items').post(items.create);
+    app.route('/items/:id').post(items.create);
     app.route('/items/:id/setstatus').put(items.setCompleted)
 
 
