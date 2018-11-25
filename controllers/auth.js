@@ -28,7 +28,7 @@ var Auth = {
                         email: foundUser.email,
                         _id: foundUser.id
                       },
-                      'UniCornsCannaeFly1337',
+                      process.env.SECRET,
                        {
                          expiresIn: '2h'
                        });
