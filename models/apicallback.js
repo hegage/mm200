@@ -15,9 +15,9 @@
         var resultJson = JSON.stringify(results);
         resultJson = JSON.parse(resultJson);
         var apiResult = {};
-   
+
         apiResult.data = resultJson;
-   
+
         if(typeof extras !== 'undefined') {
             apiResult.extras = extras;
         }
